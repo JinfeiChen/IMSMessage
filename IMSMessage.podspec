@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'IMSMessage'
   s.version          = '1.0.1'
-  s.summary          = 'A short description of IMSMessage.'
+  s.summary          = '简单的消息提示控件.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-Add long description of the pod here.
+  常用于主动操作后的反馈提示。
+  It is often used for feedback after active operation.
                        DESC
 
   s.homepage         = 'https://github.com/jinfei_chen@icloud.com/IMSMessage'
