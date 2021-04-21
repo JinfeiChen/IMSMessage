@@ -7,6 +7,7 @@
 
 #import "IMSMessageType.h"
 
+NSString *const IMSMessageType_Default = @"default";
 NSString *const IMSMessageType_Info = @"info";
 NSString *const IMSMessageType_Success = @"success";
 NSString *const IMSMessageType_Warning = @"warning";

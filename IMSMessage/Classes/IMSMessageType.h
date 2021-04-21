@@ -9,7 +9,8 @@
 
 typedef NSString *IMSMessageType NS_STRING_ENUM;
 
-FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Info; // default.
-FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Success;
-FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Warning;
-FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Error;
+FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Default; // msg (no icon)
+FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Info; // icon + msg
+FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Success; // icon + msg
+FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Warning; // icon + msg
+FOUNDATION_EXPORT IMSMessageType const IMSMessageType_Error; // icon + msg

@@ -10,8 +10,10 @@
 #import <Masonry/Masonry.h>
 #import <IMSMessage/UIImage+IMSMessage.h>
 
-#define kIMSMessageViewHeight (IMS_STATUSBAR_HEIGHT + 40)
-#define kIMSMessageShowTime 2.0
+#define kIMSMessageViewHeight      (IMS_STATUSBAR_HEIGHT + 40)
+#define kIMSMessageShowTime        2.0
+#define kIMSMessageIconWidthHeight 14.0
+#define kIMSMessageSpacing         7.0
 
 @interface IMSMessageView : UIView
 
@@ -58,19 +60,16 @@
     UILabel *alertMsg = [[UILabel alloc]init];
     alertMsg.textColor = [UIColor whiteColor];
     alertMsg.textAlignment = NSTextAlignmentLeft;
-    alertMsg.font = [UIFont systemFontOfSize:12.f weight:UIFontWeightMedium];
+    alertMsg.font = [UIFont systemFontOfSize:12.f weight:UIFontWeightRegular];
     alertMsg.numberOfLines = 2;
     self.pointLB = alertMsg;
     [self.bodyView addSubview:alertMsg];
 
     UIView *lineView = [[UIView alloc]init];
-    lineView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
+    lineView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     lineView.layer.cornerRadius = 2.0f;
     lineView.layer.masksToBounds = YES;
     [self addSubview:lineView];
-
-    CGFloat iconWidthHeight = 20.0;
-    CGFloat spacing = 10.0;
 
     [lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(30, 4));
@@ -80,21 +79,21 @@
 
     [self.bodyView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(self).offset(-15);
-        make.left.mas_greaterThanOrEqualTo(spacing);
-        make.right.mas_lessThanOrEqualTo(-spacing);
+        make.bottom.mas_equalTo(self).offset(-20);
+        make.left.mas_greaterThanOrEqualTo(kIMSMessageSpacing);
+        make.right.mas_lessThanOrEqualTo(-kIMSMessageSpacing);
     }];
 
     [self.pointIMGV mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(iconWidthHeight, iconWidthHeight));
+        make.size.mas_equalTo(CGSizeMake(kIMSMessageIconWidthHeight, kIMSMessageIconWidthHeight));
         make.left.mas_equalTo(self.bodyView).offset(0);
         make.centerY.mas_equalTo(self.bodyView);
     }];
 
     [self.pointLB mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.right.bottom.mas_equalTo(self.bodyView).offset(0);
-        make.left.mas_equalTo(self.pointIMGV.mas_right).offset(spacing);
-        make.height.mas_greaterThanOrEqualTo(iconWidthHeight);
+        make.left.mas_equalTo(self.pointIMGV.mas_right).offset(kIMSMessageSpacing);
+        make.height.mas_greaterThanOrEqualTo(kIMSMessageIconWidthHeight);
     }];
 }
 
@@ -106,21 +105,33 @@
 
     self.backgroundColor = [UIColor colorWithRed:37 / 255.0 green:39 / 255.0 blue:58 / 255.0 alpha:0.9];
     if ([type isEqualToString:IMSMessageType_Success]) {
-        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_success"];
-        self.pointIMGV.tintColor = [UIColor greenColor];
-        self.pointLB.textColor = [UIColor greenColor];
+        UIColor *color = [UIColor colorWithRed:109 / 255.0 green:214 / 255.0 blue:37 / 255.0 alpha:1.0];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_success"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.tintColor = color;
+        self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Error]) {
-        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_error"];
-        self.pointIMGV.tintColor = [UIColor redColor];
-        self.pointLB.textColor = [UIColor redColor];
+        UIColor *color = [UIColor colorWithRed:255 / 255.0 green:99 / 255.0 blue:99 / 255.0 alpha:1.0];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_error"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.tintColor = color;
+        self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Warning]) {
-        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_warning"];
-        self.pointIMGV.tintColor = [UIColor orangeColor];
-        self.pointLB.textColor = [UIColor orangeColor];
+        UIColor *color = [UIColor colorWithRed:255 / 255.0 green:194 / 255.0 blue:22 / 255.0 alpha:1.0];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_warning"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.tintColor = color;
+        self.pointLB.textColor = color;
+    } else if ([type isEqualToString:IMSMessageType_Info]) {
+        UIColor *color = [UIColor whiteColor];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.tintColor = color;
+        self.pointLB.textColor = color;
     } else {
-        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_info"];
-        self.pointIMGV.tintColor = [UIColor grayColor];
-        self.pointLB.textColor = [UIColor grayColor];
+        UIColor *color = [UIColor whiteColor];
+        self.pointIMGV.hidden = YES;
+        self.pointLB.textColor = color;
+        [self.pointLB mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.right.bottom.mas_equalTo(self.bodyView).offset(0);
+            make.height.mas_greaterThanOrEqualTo(kIMSMessageIconWidthHeight);
+        }];
     }
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }

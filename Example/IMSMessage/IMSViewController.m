@@ -28,9 +28,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [IMSMessage showAlertWithType:IMSMessageType_Success message:nil];
+- (IBAction)showDefault:(id)sender {
+    [IMSMessage showAlertWithType:IMSMessageType_Default message:@"Hello IMSMessage"];
+}
+
+- (IBAction)showInfo:(id)sender {
+    [IMSMessage showAlertWithType:IMSMessageType_Info message:@"Information"];
+}
+
+- (IBAction)showWarning:(id)sender {
+    [IMSMessage showAlertWithType:IMSMessageType_Warning message:@"Warning"];
+}
+
+- (IBAction)showSuccess:(id)sender {
+    [IMSMessage showAlertWithType:IMSMessageType_Success message:@"Congraduation"];
+}
+
+- (IBAction)showFailure:(id)sender {
+    [IMSMessage showAlertWithType:IMSMessageType_Error message:@"Sorry"];
 }
 
 @end
