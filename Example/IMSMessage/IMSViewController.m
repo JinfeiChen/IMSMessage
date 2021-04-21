@@ -30,8 +30,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    IMSMessageType_Success;
-    [IMSMessage showAlertWithType:IMSMessageType_Info message:@"successfully"];
+    [IMSMessage showAlertWithType:IMSMessageType_Success message:@"在此我們可以建立很多個 bundle，且每一個 bundle 可以放入不一樣的資源（但要切成很多個 bundle 也會造成未來在存取的時候，必須先知道該資源的 bundle 位置才能存取，可能會造成混淆）"];
 }
 
 @end
