@@ -9,10 +9,7 @@
 #import "IMSMessage.h"
 #import <Masonry/Masonry.h>
 
-NSString *const IMSFormMessageType_Info = @"info";
-NSString *const IMSFormMessageType_Success = @"success";
-NSString *const IMSFormMessageType_Warning = @"warning";
-NSString *const IMSFormMessageType_Error = @"error";
+
 
 #define kIMSMessageViewHeight 55.0
 #define kIMSMessageShowTime 3.0
@@ -108,11 +105,11 @@ NSString *const IMSFormMessageType_Error = @"error";
 {
     self.pointLB.text = message;
 
-    if ([type isEqualToString:IMSFormMessageType_Success]) {
+    if ([type isEqualToString:IMSMessageType_Success]) {
 //        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_success"];
-    } else if ([type isEqualToString:IMSFormMessageType_Error]) {
+    } else if ([type isEqualToString:IMSMessageType_Error]) {
 //        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_error"];
-    } else if ([type isEqualToString:IMSFormMessageType_Warning]) {
+    } else if ([type isEqualToString:IMSMessageType_Warning]) {
 //        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_warning"];
     } else {
 //        self.pointIMGV.image = [UIImage bundleImageWithNamed:@"msg_info"];
@@ -177,13 +174,13 @@ static IMSMessageView *_drop = nil;
     }
     _drop = [[IMSMessageView alloc]init];
 
-    if ([type isEqualToString:IMSFormMessageType_Success]) {
+    if ([type isEqualToString:IMSMessageType_Success]) {
         _drop.backgroundColor = [UIColor lightGrayColor];
         _drop.textColor = [UIColor greenColor];
-    } else if ([type isEqualToString:IMSFormMessageType_Error]) {
+    } else if ([type isEqualToString:IMSMessageType_Error]) {
         _drop.backgroundColor = [UIColor lightGrayColor];
         _drop.textColor = [UIColor redColor];
-    } else if ([type isEqualToString:IMSFormMessageType_Warning]) {
+    } else if ([type isEqualToString:IMSMessageType_Warning]) {
         _drop.backgroundColor = [UIColor lightGrayColor];
         _drop.textColor = [UIColor orangeColor];
     } else {
