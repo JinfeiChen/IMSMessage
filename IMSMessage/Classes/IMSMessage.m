@@ -10,10 +10,10 @@
 #import <Masonry/Masonry.h>
 #import <IMSMessage/UIImage+IMSMessage.h>
 
-#define kIMSMessageViewHeight (IMS_STATUSBAR_HEIGHT + 35)
-#define kIMSMessageShowTime   2.0
+#define kIMSMessageViewHeight (IMS_STATUSBAR_HEIGHT + 40)
+#define kIMSMessageShowTime 2.0
 
-@interface IMSMessageView ()
+@interface IMSMessageView : UIView
 
 @property (strong, nonatomic) UIView *bodyView; /**< <#property#> */
 @property (nonatomic, strong) UIImageView *pointIMGV;

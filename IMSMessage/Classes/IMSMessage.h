@@ -12,12 +12,7 @@
 #import <IMSMessage/IMSMessageDefine.h>
 #import <IMSMessage/IMSMessageType.h>
 
-
 NS_ASSUME_NONNULL_BEGIN
-
-@interface IMSMessageView : UIView
-
-@end
 
 @interface IMSMessage : NSObject
 
