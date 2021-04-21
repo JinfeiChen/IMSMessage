@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "IMSMessageDefine.h"
+#import <IMSMessage/IMSMessageDefine.h>
 
 typedef NSString *IMSMessageType NS_STRING_ENUM;
 
@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface IMSMessage : NSObject
+
++ (void)showAlertWithType:(IMSMessageType)type message:(NSString *)message;
 
 @end
 

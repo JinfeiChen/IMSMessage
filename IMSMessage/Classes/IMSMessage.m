@@ -7,6 +7,7 @@
 //
 
 #import "IMSMessage.h"
+#import <Masonry/Masonry.h>
 
 NSString *const IMSFormMessageType_Info = @"info";
 NSString *const IMSFormMessageType_Success = @"success";
@@ -18,8 +19,9 @@ NSString *const IMSFormMessageType_Error = @"error";
 
 @interface IMSMessageView ()
 
-@property (nonatomic, weak) UIImageView *pointIMGV;
-@property (nonatomic, weak) UILabel *pointLB;
+@property (strong, nonatomic) UIView *bodyView; /**< <#property#> */
+@property (nonatomic, strong) UIImageView *pointIMGV;
+@property (nonatomic, strong) UILabel *pointLB;
 
 @end
 
@@ -54,26 +56,50 @@ NSString *const IMSFormMessageType_Error = @"error";
 {
     self.backgroundColor = [UIColor colorWithRed:37/255.0 green:39/255.0 blue:58/255.0 alpha:0.9];
     
-    CGFloat iconWidthHeight = 20.0;
-    CGFloat spacing = 10.0;
+    _bodyView = [[UIView alloc] init];
+    [self addSubview:_bodyView];
 
     // 设置提示图标
-    UIImageView *alertIMGV = [[UIImageView alloc]initWithFrame:CGRectMake(spacing, IMS_STATUSBAR_HEIGHT + (self.frame.size.height - IMS_STATUSBAR_HEIGHT - iconWidthHeight) / 2, iconWidthHeight, iconWidthHeight)];
-    [self addSubview:alertIMGV];
-    self.pointIMGV = alertIMGV;
+    _pointIMGV = [[UIImageView alloc] init];
+    [self.bodyView addSubview:_pointIMGV];
 
     // 设置提示信息
-    UILabel *alertMsg = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(alertIMGV.frame) + spacing, IMS_STATUSBAR_HEIGHT, self.frame.size.width - CGRectGetMaxX(alertIMGV.frame) - spacing * 2, IMS_NAVIGATION_CONTENT_HEIGHT)];
+    UILabel *alertMsg = [[UILabel alloc]init];
     alertMsg.textColor = [UIColor whiteColor];
     alertMsg.textAlignment = NSTextAlignmentLeft;
     alertMsg.font = [UIFont systemFontOfSize:12.f weight:UIFontWeightMedium];
     alertMsg.numberOfLines = 2;
-    [self addSubview:alertMsg];
     self.pointLB = alertMsg;
+    [self.bodyView addSubview:alertMsg];
 
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, .5)];
+    UIView *lineView = [[UIView alloc]init];
     lineView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     [self addSubview:lineView];
+    
+    CGFloat iconWidthHeight = 20.0;
+    CGFloat spacing = 10.0;
+    
+    [lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 4));
+        make.bottom.mas_equalTo(self).offset(-5);
+        make.centerX.mas_equalTo(self);
+    }];
+    
+    [self.bodyView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self);
+        make.top.bottom.mas_equalTo(self).offset(spacing);
+    }];
+    
+    [self.pointIMGV mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(iconWidthHeight, iconWidthHeight));
+        make.top.left.mas_equalTo(self.bodyView).offset(0);
+    }];
+    
+    [self.pointLB mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.bottom.mas_equalTo(self).offset(0);
+        make.left.mas_equalTo(self.pointIMGV.mas_right).offset(spacing);
+    }];
+    
 }
 
 #pragma mark - Public Methods
@@ -131,6 +157,8 @@ NSString *const IMSFormMessageType_Error = @"error";
 
 @end
 
+static IMSMessageView *_drop = nil; 
+
 @implementation IMSMessage
 
 + (instancetype)shared {
@@ -140,6 +168,31 @@ NSString *const IMSFormMessageType_Error = @"error";
         _sharedInstance = [[self alloc] init];
     });
     return _sharedInstance;
+}
+
++ (void)showAlertWithType:(IMSMessageType)type message:(NSString *)message
+{
+    if (_drop) {
+        [_drop removeFromSuperview];
+    }
+    _drop = [[IMSMessageView alloc]init];
+
+    if ([type isEqualToString:IMSFormMessageType_Success]) {
+        _drop.backgroundColor = [UIColor lightGrayColor];
+        _drop.textColor = [UIColor greenColor];
+    } else if ([type isEqualToString:IMSFormMessageType_Error]) {
+        _drop.backgroundColor = [UIColor lightGrayColor];
+        _drop.textColor = [UIColor redColor];
+    } else if ([type isEqualToString:IMSFormMessageType_Warning]) {
+        _drop.backgroundColor = [UIColor lightGrayColor];
+        _drop.textColor = [UIColor orangeColor];
+    } else {
+        _drop.backgroundColor = [UIColor lightGrayColor];
+        _drop.textColor = [UIColor grayColor];
+    }
+    
+    [_drop alertWithType:type message:message];
+    [_drop show];
 }
 
 @end

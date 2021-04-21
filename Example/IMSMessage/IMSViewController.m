@@ -8,6 +8,8 @@
 
 #import "IMSViewController.h"
 
+#import <IMSMessage/IMSMessage.h>
+
 @interface IMSViewController ()
 
 @end
@@ -24,6 +26,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    IMSMessageType_Success;
+    [IMSMessage showAlertWithType:IMSMessageType_Info message:@"successfully"];
 }
 
 @end
