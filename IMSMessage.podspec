@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   It is often used for feedback after active operation.
                        DESC
 
-  s.homepage         = 'https://github.com/jinfei_chen@icloud.com/IMSMessage'
+  s.homepage         = 'https://github.com/JinfeiChen/IMSMessage'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'jinfei_chen@icloud.com' => 'jinfei_chen@icloud.com' }
