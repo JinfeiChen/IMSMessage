@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IMSMessage'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = '简单的消息提示控件.'
 
 # This description is used to generate tags and improve search results.

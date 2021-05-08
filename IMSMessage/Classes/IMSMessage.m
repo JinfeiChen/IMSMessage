@@ -10,7 +10,8 @@
 #import <Masonry/Masonry.h>
 #import <IMSMessage/UIImage+IMSMessage.h>
 
-#define kIMSMessageViewHeight      (IMS_STATUSBAR_HEIGHT + 40)
+#define kIMSMessageViewLabelHeight 40.0
+#define kIMSMessageViewHeight      (IMS_STATUSBAR_HEIGHT + kIMSMessageViewLabelHeight)
 #define kIMSMessageShowTime        2.0
 #define kIMSMessageIconWidthHeight 14.0
 #define kIMSMessageSpacing         7.0
@@ -50,6 +51,7 @@
 - (void)createAlert
 {
     _bodyView = [[UIView alloc] init];
+//    _bodyView.backgroundColor = [UIColor redColor];
     [self addSubview:_bodyView];
 
     // 设置提示图标
@@ -61,7 +63,7 @@
     alertMsg.textColor = [UIColor whiteColor];
     alertMsg.textAlignment = NSTextAlignmentLeft;
     alertMsg.font = [UIFont systemFontOfSize:12.f weight:UIFontWeightRegular];
-    alertMsg.numberOfLines = 2;
+    alertMsg.numberOfLines = 0;
     self.pointLB = alertMsg;
     [self.bodyView addSubview:alertMsg];
 
@@ -79,9 +81,10 @@
 
     [self.bodyView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
-        make.bottom.mas_equalTo(self).offset(-20);
         make.left.mas_greaterThanOrEqualTo(kIMSMessageSpacing);
         make.right.mas_lessThanOrEqualTo(-kIMSMessageSpacing);
+        make.bottom.mas_equalTo(self).offset(-15);
+        make.top.mas_equalTo(self).offset(IMS_STATUSBAR_HEIGHT + 5);
     }];
 
     [self.pointIMGV mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -106,22 +109,22 @@
     self.backgroundColor = [UIColor colorWithRed:37 / 255.0 green:39 / 255.0 blue:58 / 255.0 alpha:0.9];
     if ([type isEqualToString:IMSMessageType_Success]) {
         UIColor *color = [UIColor colorWithRed:109 / 255.0 green:214 / 255.0 blue:37 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_success"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_success"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Error]) {
         UIColor *color = [UIColor colorWithRed:255 / 255.0 green:99 / 255.0 blue:99 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_error"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_error"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Warning]) {
         UIColor *color = [UIColor colorWithRed:255 / 255.0 green:194 / 255.0 blue:22 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_warning"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_warning"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Info]) {
         UIColor *color = [UIColor whiteColor];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"msg_info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else {
@@ -133,6 +136,7 @@
             make.height.mas_greaterThanOrEqualTo(kIMSMessageIconWidthHeight);
         }];
     }
+    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -142,6 +146,13 @@
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self];
+    
+    // MARK: Min/Max height
+    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(0);
+        make.height.mas_greaterThanOrEqualTo(kIMSMessageViewHeight);
+        make.height.mas_lessThanOrEqualTo(IMS_SCREEN_HEIGHT);
+    }];
 
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:5.f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         self.center = CGPointMake([UIScreen mainScreen].bounds.size.width / 2, kIMSMessageViewHeight / 2);
