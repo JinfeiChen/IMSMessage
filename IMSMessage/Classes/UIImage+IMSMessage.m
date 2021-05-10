@@ -10,9 +10,10 @@
 
 @implementation UIImage (IMSMessage)
 
-+ (UIImage *)bundleImageWithNamed:(NSString *)imageName
++ (UIImage *)IMSMessage_bundleImageWithNamed:(NSString *)imageName
 {
-    NSBundle *resouceBundle = [NSBundle bundleWithBundleName:@"IMSMessage" podName:@"IMSMessage"];
+    NSBundle *resouceBundle = [NSBundle IMSMessage_bundleWithBundleName:@"IMSMessage" podName:@"IMSMessage"];
+    NSLog(@"%@", resouceBundle);
     return [UIImage imageNamed:imageName inBundle:resouceBundle compatibleWithTraitCollection:nil];
 }
 

@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (IMSMessage)
 
-+ (UIImage *)bundleImageWithNamed:(NSString *)imageName;
++ (UIImage *)IMSMessage_bundleImageWithNamed:(NSString *)imageName; 
 
 @end
 

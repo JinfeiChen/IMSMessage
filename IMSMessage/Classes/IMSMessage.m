@@ -109,22 +109,26 @@
     self.backgroundColor = [UIColor colorWithRed:37 / 255.0 green:39 / 255.0 blue:58 / 255.0 alpha:0.9];
     if ([type isEqualToString:IMSMessageType_Success]) {
         UIColor *color = [UIColor colorWithRed:109 / 255.0 green:214 / 255.0 blue:37 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_success"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *img = [[UIImage IMSMessage_bundleImageWithNamed:@"ic_msg_success"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = img;
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Error]) {
         UIColor *color = [UIColor colorWithRed:255 / 255.0 green:99 / 255.0 blue:99 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_error"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *img = [[UIImage IMSMessage_bundleImageWithNamed:@"ic_msg_error"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = img;
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Warning]) {
         UIColor *color = [UIColor colorWithRed:255 / 255.0 green:194 / 255.0 blue:22 / 255.0 alpha:1.0];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_warning"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *img = [[UIImage IMSMessage_bundleImageWithNamed:@"ic_msg_warning"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = img;
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else if ([type isEqualToString:IMSMessageType_Info]) {
         UIColor *color = [UIColor whiteColor];
-        self.pointIMGV.image = [[UIImage bundleImageWithNamed:@"ic_msg_info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *img = [[UIImage IMSMessage_bundleImageWithNamed:@"ic_msg_info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.pointIMGV.image = img;
         self.pointIMGV.tintColor = color;
         self.pointLB.textColor = color;
     } else {
@@ -136,6 +140,7 @@
             make.height.mas_greaterThanOrEqualTo(kIMSMessageIconWidthHeight);
         }];
     }
+    self.pointIMGV.backgroundColor = self.pointIMGV.image ? [UIColor clearColor] : [UIColor whiteColor];
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }

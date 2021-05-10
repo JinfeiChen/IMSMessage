@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param podName pod的名字
  @return bundle
  */
-+ (NSBundle *)bundleWithBundleName:(NSString *)bundleName podName:(NSString *)podName;
++ (NSBundle *)IMSMessage_bundleWithBundleName:(NSString *)bundleName podName:(NSString *)podName;
 
 @end
 
